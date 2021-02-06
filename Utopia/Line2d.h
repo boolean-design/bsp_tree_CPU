@@ -1,4 +1,4 @@
-/* 0.0.1 Version
+/* 0.0.2 Version
    Code by Utopia 
 */
 
@@ -6,21 +6,25 @@
 
 class Line2d {
 	double line_d;
-	/* Ê¹ÓÃ(N * P - d)À´ÅĞ¶ÏµãÔÚÖ±ÏßÇ°/ºó£¬±¾ÖÊÉÏÊÇÅĞ¶ÏÖ±ÏßÉÏÄ³Ò»µãµ½µãPµÄÏòÁ¿Óë·¨ÏßNµÄ¼Ğ½Ç */
+	/* ä½¿ç”¨(N * P - d)æ¥åˆ¤æ–­ç‚¹åœ¨ç›´çº¿å‰/åï¼Œæœ¬è´¨ä¸Šæ˜¯åˆ¤æ–­ç›´çº¿ä¸ŠæŸä¸€ç‚¹åˆ°ç‚¹Pçš„å‘é‡ä¸æ³•çº¿Nçš„å¤¹è§’ */
 	Vector2d line_normal;
 
 public:
 	Line2d() : line_normal(0, 0), line_d(0) {}
 
-	/* ÒÑÖªÁ½µãÈ·¶¨Ö±Ïß */
+	/* å·²çŸ¥ä¸¤ç‚¹ç¡®å®šç›´çº¿ */
 	Line2d(const Vector2d& p1, const Vector2d& p2) : line_normal((p2 - p1)(0), -(p2 - p1)(1)), line_d(p2.dot(line_normal)) {}
 
-	/* ÅĞ¶ÏµãÊÇÔÚÖ±ÏßµÄÇ°»¹ÊÇºó */
+	/* åˆ¤æ–­ç‚¹æ˜¯åœ¨ç›´çº¿çš„å‰è¿˜æ˜¯å */
 	int checkPoint(const Vector2d& point);
+
+	/* åˆ¤æ–­çº¿æ®µä¸åˆ†å‰²ç›´çº¿çš„å…³ç³»ï¼Œ-1åœ¨ç›´çº¿åï¼Œ1åœ¨ç›´çº¿å‰ï¼Œ0åœ¨ç›´çº¿ä¸Šï¼Œ2ä¸ºéé‡åˆç›¸äº¤ */
+	int checkSegment(const Segment2d& seg) { /* TODO */ }
+
 };
 
 int Line2d::checkPoint(const Vector2d& point) {
 	int res = (*this).line_normal.dot(point) - (*this).line_d;
-	/* res < 0ÔÚÖ±Ïßºó£»res > 0ÔÚÖ±ÏßÇ°£»·ñÔòÔÚÖ±ÏßÉÏ */
+	/* res < 0åœ¨ç›´çº¿åï¼›res > 0åœ¨ç›´çº¿å‰ï¼›å¦åˆ™åœ¨ç›´çº¿ä¸Š */
 	return res;
 }
