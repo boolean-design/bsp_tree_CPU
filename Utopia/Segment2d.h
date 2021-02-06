@@ -1,4 +1,4 @@
-/* 0.0.1 Version
+/* 0.0.2 Version
    Code by Utopia
 */
 
@@ -11,14 +11,14 @@ public:
 	Segment2d() { endPoints[0] = endPoints[1] = Vector2d(0, 0); }
 	Segment2d(const Vector2d& p1, const Vector2d& p2) { endPoints[0] = p1; endPoints[1] = p2; }
 	
-	/* »ñÈ¡Ïß¶ÎËùÔÚµÄÖ±Ïß */
+	/* è·å–çº¿æ®µæ‰€åœ¨çš„ç›´çº¿ */
 	Line2d getLine() const { return Line2d(endPoints[0], endPoints[1]); }
 
-	/* »ñÈ¡Ïß¶ÎµÄÄ³¸ö¶Ëµã*/
+	/* è·å–çº¿æ®µçš„æŸä¸ªç«¯ç‚¹*/
 	Vector2d getVertex(int i) const { return endPoints[i]; }
 };
 
-/* ÓÃÒ»ÌõÖ±Ïß°ÑÒ»¸öÏß¶Î·Ö³ÉÁ½¶Î·Ö±ğ·ÅÈëÇ°²àºÍºó²àÁ½¸ö×Ó½áµãÏß¶Î¼¯ºÏÖĞ */
+/* ç”¨ä¸€æ¡ç›´çº¿æŠŠä¸€ä¸ªçº¿æ®µåˆ†æˆä¸¤æ®µåˆ†åˆ«æ”¾å…¥å‰ä¾§å’Œåä¾§ä¸¤ä¸ªå­ç»“ç‚¹çº¿æ®µé›†åˆä¸­ */
 void splitLineSegment(const Segment2d& seg, Line2d line, Segment2d& frontSeg, Segment2d& backSeg) {
-	/* TODO; */
+	/* æˆ‘ä¼¼ä¹æš‚æ—¶ä¸ä¼šå†™è¿™ä¸ªã€‚æ˜¯è¦å–äº¤ç‚¹ä¸€é€šæ“ä½œï¼Ÿ */
 }
