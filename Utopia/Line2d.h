@@ -1,5 +1,5 @@
-/* 0.0.3 Version
-   Code by Utopia, update by wyb
+/* 0.0.4 Version
+   code by Utopia, update by wyb
 */
 #ifndef _LINE2D_H_
 #define _LINE2D_H_
@@ -20,12 +20,12 @@ public:
 
 	/* 获取相关信息 */
 	double getd() const { return line_d; }
-	Vector2d getnormal() const {return line_normal; }
+	Vector2d getnormal() const { return line_normal; }
 
-	/* 已知两点确定直线 */
-	Line2d(const Vector2d& p1, const Vector2d& p2) : line_normal((p2 - p1)(0), -(p2 - p1)(1)), line_d(p2.dot(line_normal)) {}
+	/* 已知两点确定直线，为了所有线段法向量指向内部，输入的点集应按照顺时针方向 */
+	Line2d(const Vector2d& p1, const Vector2d& p2) : line_normal((p2 - p1)(1), -(p2 - p1)(0)), line_d(p2.dot(line_normal)) {}
 
-	/* 判断点是在直线的前还是后 */
+	/* 判断点是在直线的前还是后，-1 在直线后；1 在直线前；0 在直线上*/
 	int checkPoint(const Vector2d& point);
 
 	/* 判断线段与分割直线的关系，-1在直线后，1在直线前，0在直线上，2为非重合相交 */

@@ -1,5 +1,5 @@
-/* 0.0.3 Version
-   Code by Utopia, update by wyb
+/* 0.0.4 Version
+   code by Utopia, update by wyb
 */
 
 #include <eigen3/Eigen/Dense>
@@ -12,24 +12,23 @@ using std::vector;
 
 /* 用一条直线把一个线段分成两段分别放入前侧和后侧两个子结点线段集合中 */
 void splitLineSegment(const Segment2d& seg, Line2d line, Segment2d& frontSeg, Segment2d& backSeg) {
-	/* 我似乎暂时不会写这个。是要取交点一通操作？ */
-	/* 因为后面调用该函数时进行了已经进行了相交检测, 故可直接求交点 */
-	
-	Line2d segLine=seg.getLine();
+	/* 因为后面调用该函数时进行了已经进行了相交检测, 故交点必然存在，可直接求两条直线的交点 */
+	Line2d segLine = seg.getLine();
 	Matrix2d n1, n2, d1;
-	n1 <<	segLine.getnormal()(1),	line.getd(),
-			line.getnormal()(1),	segLine.getd();
-	n2 <<	segLine.getnormal()(0),	line.getd(),
-			line.getnormal()(0),	segLine.getd();
+	n1 <<   segLine.getd(), getLine.getnormal()(1),
+		    line.getd()   , line.getnormal()(1);
+	n2 <<   segLine.getnormal()(0), segLine.getd(),
+		    line.getnormal()(0)   , line.getd();
 	d1 <<	segLine.getnormal()(0),	segLine.getnormal()(1),
 			line.getnormal()(0),	line.getnormal()(1);
 	double x = n1.determinant() / d1.determinant(), y = - n2.determinant() / d1.determinant();
-	Vector2d interPoint;
-	interPoint << x, y;
-	/* 以上为直线交点计算 */
+	Vector2d interPoint(x, y);
+	/* 以上为直线交点计算，ax+by+c=0 式中，(a,b)=normal, -c = d */
 
+	/* 由于输入点集为顺时针方向，故线段的第一个端点一定在直线前方，第二个端点在直线后方 */
 	frontSeg = Segment2d(seg.getVertex(0), interPoint);
 	backSeg = Segment2d(interPoint, seg.getVertex(1));
+
 	return;
 }
 
@@ -63,23 +62,21 @@ bspNode2d* bspTree2d::buildBspTree2d(vector<Segment2d>& seg_v, int depth = 0) {
 		Segment2d& seg = seg_v[i], frontPart, backPart;
 
 		int lineSide = splitLine.checkSegment(seg);
-		if (lineSide == 1) { // 在直线前
-			frontList.push_back(seg);
-			continue;
-		} // 在直线上
-		else if (lineSide == 0) {
-			inList.push_back(seg);
-			continue;
-		} // 在直线后
-		else if (lineSide == -1) {
+		switch (lineSide) {
+		case -1: // 在直线后
 			backList.push_back(seg);
-			continue;
-		} // 被直线分为两半（非重合相交）
-		else {
+			break;
+		case 0: // 在直线上
+			inList.push_back(seg);
+			break;
+		case 1: // 在直线前
+			frontList.push_back(seg);
+			break;
+		case 2: // 被直线分为两半（非重合相交）
 			splitLineSegment(seg, splitLine, frontPart, backPart);
 			frontList.push_back(frontPart);
 			backList.push_back(backPart);
-			continue;
+			break;
 		}
 	}
 
@@ -124,7 +121,7 @@ bool bspTree2d::checkPoint(Vector2d p, bspNode2d* node) {
 		return false;
 	}
 
-	/* 不知道出了什么bug，那就当这个点不在内部就好了 */
+	/* 正常情况下不会到这里，如果出现bug，先默认该点不在内部 */
 	return false;
 }
 
