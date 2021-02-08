@@ -1,5 +1,5 @@
-/* 0.0.3 Version
-   Code by Utopia, update by wyb
+/* 0.0.4 Version
+   code by Utopia, update by wyb
 */
 
 #include <iostream>
@@ -11,6 +11,7 @@
 using namespace Eigen;
 
 int main() {
-   std::cout<<"BSP yyds!"<<std::endl;
+	/* Ê¹ÓÃBSP */
+	std::cout<<"BSP yyds!"<<std::endl;
 	return 0;
 }

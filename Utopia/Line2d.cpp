@@ -1,5 +1,5 @@
-/* 0.0.3 Version
-   Code by Utopia, update by wyb
+/* 0.0.4 Version
+   code by Utopia, update by wyb
 */
 
 #include "Line2d.h"
@@ -11,7 +11,7 @@ int Line2d::checkPoint(const Vector2d& point) {
 	int res = (*this).line_normal.dot(point) - (*this).line_d;
 	if (res > 0) res = 1;
 	if (res < 0) res = -1;
-	/* res = -1 在直线后；res = 1在直线前；res = 0 在直线上 */
+	/* res = -1 在直线后；res = 1 在直线前；res = 0 在直线上 */
 	return res;
 }
 
